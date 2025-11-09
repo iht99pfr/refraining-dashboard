@@ -1,3 +1,5 @@
+// lib/api.js
+
 import axios from 'axios'
 import { supabase } from './supabase'
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { participantsApi, callsApi } from '../lib/api'
@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [editForm, setEditForm] = useState({})
   const [error, setError] = useState('')
+  const hasLoadedData = useRef(false)
   
   const { user, signOut, handleAuthCallback } = useAuth()
   const navigate = useNavigate()
@@ -40,7 +41,7 @@ export default function Dashboard() {
 
   // Load participant data
   useEffect(() => {
-    if (!user) return
+    if (!user || hasLoadedData.current) return
 
     const loadData = async () => {
       try {
@@ -57,6 +58,8 @@ export default function Dashboard() {
         // Load call history
         const callHistory = await callsApi.getHistory(participantData.id)
         setCalls(callHistory)
+        
+        hasLoadedData.current = true
       } catch (err) {
         console.error('Failed to load data:', err)
         setError('Failed to load your profile')
@@ -66,7 +69,7 @@ export default function Dashboard() {
     }
 
     loadData()
-  }, [user])
+  }, [user?.id])
 
   const handleLogout = async () => {
     try {
@@ -93,6 +96,8 @@ export default function Dashboard() {
   }
 
   const handleInitiateCall = async () => {
+    if (!profile?.id) return
+    
     try {
       setLoading(true)
       await callsApi.initiate(profile.id)

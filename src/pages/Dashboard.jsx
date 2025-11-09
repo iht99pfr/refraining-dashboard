@@ -28,16 +28,23 @@ export default function Dashboard() {
           .then(() => {
             // Remove auth from URL
             window.history.replaceState({}, '', '/dashboard')
+            setError('')  // ← Clear any errors on success
           })
           .catch(err => {
             console.error('Auto-login failed:', err)
-            setError('Failed to authenticate. Please sign in manually.')
+            // Only show error if user is NOT logged in
+            if (!user) {
+              setError('Failed to authenticate. Please sign in manually.')
+            }
           })
       } catch (err) {
         console.error('Failed to parse auth data:', err)
+        if (!user) {
+          setError('Failed to parse authentication data.')
+        }
       }
     }
-  }, [searchParams, handleAuthCallback])
+  }, [searchParams, handleAuthCallback, user])  
 
   // Load participant data
   useEffect(() => {

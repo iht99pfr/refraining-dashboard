@@ -394,6 +394,116 @@
   font-weight: 500;
 }
 
+
+/* Beta Notice */
+.beta-notice {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.beta-notice strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.beta-notice p {
+  margin: 0;
+  opacity: 0.95;
+}
+
+.beta-notice a {
+  color: white;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.beta-notice a:hover {
+  opacity: 0.8;
+}
+
+/* Call Section */
+.call-section {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+}
+
+.call-intro {
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.call-number-box {
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.phone-number {
+  margin-bottom: 0.5rem;
+}
+
+.number-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.number-link {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #667eea;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+.number-link:hover {
+  color: #764ba2;
+}
+
+.call-note {
+  color: #888;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.call-tips {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.call-tips h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1rem;
+}
+
+.call-tips ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.call-tips li {
+  margin-bottom: 0.5rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.call-tips li:last-child {
+  margin-bottom: 0;
+}
+
 /* Mobile */
 @media (max-width: 767px) {
   .dashboard-header {

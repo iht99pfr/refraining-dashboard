@@ -28,11 +28,10 @@ export default function Dashboard() {
           .then(() => {
             // Remove auth from URL
             window.history.replaceState({}, '', '/dashboard')
-            setError('')  // ← Clear any errors on success
+            setError('')
           })
           .catch(err => {
             console.error('Auto-login failed:', err)
-            // Only show error if user is NOT logged in
             if (!user) {
               setError('Failed to authenticate. Please sign in manually.')
             }
@@ -102,25 +101,6 @@ export default function Dashboard() {
     }
   }
 
-  const handleInitiateCall = async () => {
-    if (!profile?.id) return
-    
-    try {
-      setLoading(true)
-      await callsApi.initiate(profile.id)
-      alert('Call initiated! You should receive a call shortly.')
-      
-      // Reload call history
-      const callHistory = await callsApi.getHistory(profile.id)
-      setCalls(callHistory)
-    } catch (err) {
-      console.error('Failed to initiate call:', err)
-      alert('Failed to initiate call. Please try again.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
   if (loading && !profile) {
     return (
       <div className="dashboard-container">
@@ -145,6 +125,16 @@ export default function Dashboard() {
       </header>
 
       {error && <div className="error-message">{error}</div>}
+
+      {/* Beta Notice */}
+      <div className="beta-notice">
+        <strong>🧪 Beta Testing Phase</strong>
+        <p>
+          Refrain.ing is currently in testing. We're excited to have you try the service! 
+          Your feedback is invaluable - please share your thoughts at{' '}
+          <a href="mailto:support@refrain.ing">support@refrain.ing</a>
+        </p>
+      </div>
 
       <div className="dashboard-content">
         {/* Profile Section */}
@@ -241,16 +231,33 @@ export default function Dashboard() {
           )}
         </section>
 
-        {/* Actions Section */}
-        <section className="card actions-section">
-          <h2>Quick Actions</h2>
-          <div className="action-buttons">
-            <button onClick={handleInitiateCall} className="primary-action" disabled={loading}>
-              📞 Call Now
-            </button>
-            <button className="secondary-action" disabled>
-              📅 Schedule Next Call
-            </button>
+        {/* Call Sia Section */}
+        <section className="card call-section">
+          <h2>📞 Talk to Sia</h2>
+          <p className="call-intro">
+            Ready to test the service? Call Sia anytime to check in or get support during your recovery journey.
+          </p>
+          
+          <div className="call-number-box">
+            <div className="phone-number">
+              <span className="number-label">Call Sia:</span>
+              <a href="tel:+46790081878" className="number-link">
+                +46 79-008 18 78
+              </a>
+            </div>
+            <p className="call-note">
+              Available 24/7 • Swedish number • Standard call rates apply
+            </p>
+          </div>
+
+          <div className="call-tips">
+            <h3>Tips for your call:</h3>
+            <ul>
+              <li>Sia will greet you by name and ask how you're doing</li>
+              <li>Be honest - there's no judgment</li>
+              <li>You can call for daily check-ins or whenever you need support</li>
+              <li>Each call helps Sia understand your journey better</li>
+            </ul>
           </div>
         </section>
 
@@ -258,7 +265,7 @@ export default function Dashboard() {
         <section className="card history-section">
           <h2>Call History</h2>
           {calls.length === 0 ? (
-            <p className="empty-state">No calls yet. Initiate your first call above!</p>
+            <p className="empty-state">No calls yet. Give Sia a call to get started!</p>
           ) : (
             <div className="call-list">
               {calls.map((call) => (
